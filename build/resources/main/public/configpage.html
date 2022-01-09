@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="assets/js/config.js"></script>
+<!-- Template Main CSS File -->
+<link href="assets/css/configPage.css" rel="stylesheet">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Configure Treasure Hunt</title>
+</head>
+<body style="margin: 50px">
+<div class="header">Settings</div>
+<h1>All admins</h1>
+<div>
+    <table class="table table-striped" width="500">
+        <thead>
+        <tr>
+            <th>Pic</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody id="admins">
+        </tbody>
+    </table>
+</div>
+
+<div class="admin-update">
+    <div>
+        <h1>Add admins</h1>
+        Email : <input type="text" id="add-admin-email"/>
+        <button id="add-admin" onclick="addAdmin()">Add Admin</button>
+    </div>
+    <div>
+        <h1>Remove admins</h1>
+        Email : <input type="text" id="remove-admin-email"/>
+        <button id="remove-admin" onclick="removeAdmin()">Remove Admin</button>
+    </div>
+</div>
+<div class="current-setting-container">
+    <h1 class="center-align">Current settings</h1>
+    <div class="center-align content-margin">Clari only : <span type="text" id="clariOnly"></span></div>
+    <div class="center-align content-margin">Start Time : <span type="text" id="startTime"></span></div>
+    <div class="center-align content-margin">End Time : <span type="text" id="endTime"></span></div>
+    <div class="center-align content-margin">Threshold : <span type="text" id="threshold"></span></div>
+</div>
+<div class="settings-form">
+    <div class="settings-form-header">Settings form</div>
+    <div class="content-margin">Clari only : <input type="text" id="clariOnlyInput"/></div>
+    <div class="content-margin">Start Time : <input type="text" id="startTimeInput"/></div>
+    <div class="content-margin">End Time : <input type="text" id="endTimeInput"/></div>
+    <div class="content-margin">Threshold : <input type="text" id="thresholdInput"/></div>
+    <div class="content-margin"><button id="updateSetting" onclick="updateSetting()">Update Settings</button></div>
+</div>
+<div class="epoc-link"><a href="http://epochconverter.com/" target="_blank">Epoc time converter</a></div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    volumes:
+      - /home/barry/mongodb/database:/data/db
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
+
+  be:
+    image: backendapplication
+    container_name: be
+    depends_on:
+      - mongo
+    ports:
+      - 8080:8080
