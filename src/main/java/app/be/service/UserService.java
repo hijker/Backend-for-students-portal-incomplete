@@ -14,11 +14,14 @@ public class UserService {
     public UserService() {
     }
 
-    public User insertUser(final String userName,
+    public User insertUser(final String name,
+                           final String email,
+                           final String type,
                            final String password) {
         final User user = new User();
-        user.setName(userName);
-        user.setEmail(userName);
+        user.setName(name);
+        user.setEmail(email);
+        user.setType(type);
         user.setPassword(password);
         return userDaoService.createUsers(user);
     }

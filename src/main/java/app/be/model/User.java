@@ -18,6 +18,9 @@ public class User {
     @JsonProperty("password")
     private String password;
 
+    @JsonProperty("type")
+    private String type;
+
     public User() {
     }
 
@@ -33,6 +36,10 @@ public class User {
         return password;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public void setEmail(final String email) {
         this.email = email;
     }
@@ -43,5 +50,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
