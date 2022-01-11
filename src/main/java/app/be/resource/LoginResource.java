@@ -72,42 +72,28 @@ public class LoginResource {
         return ResponseEntity.ok().body(null);
     }
 
-
-    @PostMapping(value = "/verifyOTP",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> otp(final HttpServletRequest request,
-                                      final int otp) {
-
-        if(otps.getOrDefault(request.getSession().getId(), -1) != otp) {
-            return ResponseEntity.badRequest().body("Wrong OTP");
-        }
-        return ResponseEntity.ok().body("Login Success");
-    }
-
     @PostMapping(value = "/login",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> loginUser(final HttpServletRequest request,
                                             final String email,
-                                            final String password) {
-
+                                            final String key) {
         User user = userService.findUser(email);
 
         if (user == null) {
             return ResponseEntity.badRequest().body("Invalid email");
         }
         if (user.getType().equalsIgnoreCase("student")) {
-            //Send OTP
-            int random = (int) (System.currentTimeMillis() + new Random().nextInt(100000000)) % 1000000;
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("noreply@iit.com");
-            message.setTo(email);
-            message.setSubject("Login OTP");
-            otps.put(request.getSession().getId(), random);
-            message.setText("Your OTP is : " + random);
-            emailSender.send(message);
-            return ResponseEntity.ok().body("OTP Send");
+            int otp;
+            try {
+                otp = Integer.parseInt(key);
+            } catch (NumberFormatException e) {
+                return ResponseEntity.badRequest().body("Wrong OTP");
+            }
+            if(otps.getOrDefault(request.getSession().getId(), -1) != otp) {
+                return ResponseEntity.badRequest().body("Wrong OTP");
+            }
         }
-        if (!user.getPassword().equals(password)) {
+        if (!user.getPassword().equals(key)) {
             return ResponseEntity.badRequest().body("Bad password");
         }
         return ResponseEntity.ok().body("Login Success");
@@ -123,6 +109,15 @@ public class LoginResource {
             return ResponseEntity.badRequest().body("Invalid email");
         }
         if (user.getType().equalsIgnoreCase("student")) {
+            //Send OTP
+            int random = (int) (System.currentTimeMillis() + new Random().nextInt(100000000)) % 1000000;
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("noreply@iit.com");
+            message.setTo(email);
+            message.setSubject("Login OTP");
+            otps.put(request.getSession().getId(), random);
+            message.setText("Your OTP is : " + random);
+            emailSender.send(message);
             return ResponseEntity.ok().body("OTP");
         }
 

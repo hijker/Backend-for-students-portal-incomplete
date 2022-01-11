@@ -5,7 +5,8 @@ services:
     image: mongo
     container_name: mongo
     volumes:
-      - /home/barry/mongodb/database:/data/db
+      - c:/data/db:/data/db
+      - c:/data/configdb:/data/configdb
     ports:
       - 27017:27017
     restart: unless-stopped
@@ -16,9 +17,9 @@ services:
     expose:
       - 6379
 
-  be:
+  backendapplication:
     image: backendapplication
-    container_name: be
+    container_name: backendapplication
     depends_on:
       - mongo
     ports:
