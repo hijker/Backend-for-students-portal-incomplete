@@ -1,13 +1,12 @@
 package app.be.resource;
 
 import app.be.model.Poster;
+import app.be.response.PosterListResponse;
 import app.be.service.PosterService;
-import app.be.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,12 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/file")
-public class UploadResource {
+@RequestMapping("/poster")
+public class PosterUploadResource {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UploadResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PosterUploadResource.class);
 
     @Autowired
     private PosterService posterService;
@@ -53,4 +54,15 @@ public class UploadResource {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + name + "\"")
                 .body(resource);
     }
+
+    @GetMapping(value = "/all",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PosterListResponse> all(final HttpServletRequest request) {
+        List<Poster> posters = posterService.findAll();
+        List<String> collect = posters.stream()
+                .map(Poster::getName)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(new PosterListResponse(posters.size(), collect));
+    }
+
 }

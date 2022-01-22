@@ -7,6 +7,8 @@ import app.be.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PosterDaoService {
 
@@ -26,5 +28,9 @@ public class PosterDaoService {
 
     public Poster findPosterByName(String name) {
         return posterRepository.findByName(name);
+    }
+
+    public List<Poster> findAllPoster() {
+        return posterRepository.findAll();
     }
 }

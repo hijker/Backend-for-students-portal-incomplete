@@ -1,11 +1,11 @@
 package app.be.resource;
 
 import app.be.model.User;
+import app.be.response.StandardResponse;
 import app.be.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/auth")
-public class LoginResource {
+public class AuthResource {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocietyAuthResource.class);
 
     @Autowired
     private UserService userService;
@@ -32,6 +33,8 @@ public class LoginResource {
     private JavaMailSender emailSender;
 
     static Map<String, Integer> otps = new ConcurrentHashMap<>();
+
+    static Map<String, User> activeUsers = new ConcurrentHashMap<>();
 
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> addUser(final HttpServletRequest request,
@@ -44,69 +47,42 @@ public class LoginResource {
         return ResponseEntity.ok().body(user);
     }
 
-    @GetMapping(value = "/info",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUser(final HttpServletRequest request) {
-
-        LOGGER.info("request {}", request);
-
-        return ResponseEntity.ok().body(null);
-    }
-
-    @GetMapping(value = "/check",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> check(final HttpServletRequest request) {
-        List<String> messages = (List<String>) request.getSession().getAttribute("MY_SESSION_MESSAGES");
-
-        request.getSession().setAttribute("MY_SESSION_MESSAGES", Arrays.asList(System.currentTimeMillis() + ""));
-        if (messages == null) {
-            messages = new ArrayList<>();
-        }
-
-        System.out.println("Session id : " + request.getSession().getId());
-
-        for (String m : messages) {
-            System.out.println(m);
-        }
-
-        return ResponseEntity.ok().body(null);
-    }
-
     @PostMapping(value = "/login",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> loginUser(final HttpServletRequest request,
-                                            final String email,
-                                            final String key) {
+    public ResponseEntity<StandardResponse> loginUser(final HttpServletRequest request,
+                                                      final String email,
+                                                      final String key) {
         User user = userService.findUser(email);
 
         if (user == null) {
-            return ResponseEntity.badRequest().body("Invalid email");
+            return ResponseEntity.badRequest().body(new StandardResponse("Invalid email"));
         }
         if (user.getType().equalsIgnoreCase("student")) {
             int otp;
             try {
                 otp = Integer.parseInt(key);
             } catch (NumberFormatException e) {
-                return ResponseEntity.badRequest().body("Wrong OTP");
+                return ResponseEntity.badRequest().body(new StandardResponse("Wrong OTP"));
             }
-            if(otps.getOrDefault(request.getSession().getId(), -1) != otp) {
-                return ResponseEntity.badRequest().body("Wrong OTP");
+            if (otps.getOrDefault(request.getSession().getId(), -1) != otp) {
+                return ResponseEntity.badRequest().body(new StandardResponse("Wrong OTP"));
             }
         }
         if (!user.getPassword().equals(key)) {
-            return ResponseEntity.badRequest().body("Bad password");
+            return ResponseEntity.badRequest().body(new StandardResponse("Bad password"));
         }
-        return ResponseEntity.ok().body("Login Success");
+        activeUsers.put(request.getSession().getId(), user);
+        return ResponseEntity.ok().body(new StandardResponse("Login Success"));
     }
 
     @GetMapping(value = "/authType",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> authType(final HttpServletRequest request,
-                                           final String email) {
+    public ResponseEntity<StandardResponse> authType(final HttpServletRequest request,
+                                                     final String email) {
 
         User user = userService.findUser(email);
         if (user == null) {
-            return ResponseEntity.badRequest().body("Invalid email");
+            return ResponseEntity.badRequest().body(new StandardResponse("Invalid email"));
         }
         if (user.getType().equalsIgnoreCase("student")) {
             //Send OTP
@@ -118,9 +94,26 @@ public class LoginResource {
             otps.put(request.getSession().getId(), random);
             message.setText("Your OTP is : " + random);
             emailSender.send(message);
-            return ResponseEntity.ok().body("OTP");
+            return ResponseEntity.ok().body(new StandardResponse("OTP"));
         }
 
-        return ResponseEntity.ok().body("PASSWORD");
+        return ResponseEntity.ok().body(new StandardResponse("PASSWORD"));
+    }
+
+    @PostMapping(value = "/logout",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StandardResponse> logout(final HttpServletRequest request) {
+        activeUsers.remove(request.getSession().getId());
+        return ResponseEntity.ok().body(new StandardResponse("Logged Out"));
+    }
+
+    @GetMapping(value = "/current",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> currentUser(final HttpServletRequest request) {
+        User user = activeUsers.get(request.getSession().getId());
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(user);
     }
 }
