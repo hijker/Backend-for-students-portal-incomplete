@@ -3,12 +3,14 @@ package app.be.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SocietyUser {
 
     @Id
+    @Indexed(unique = true)
     @JsonProperty("email")
     private String email;
 

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -59,10 +60,9 @@ public class PosterUploadResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PosterListResponse> all(final HttpServletRequest request) {
         List<Poster> posters = posterService.findAll();
-        List<String> collect = posters.stream()
-                .map(Poster::getName)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok().body(new PosterListResponse(posters.size(), collect));
+        Map<String, String> names = posters.stream()
+                .collect(Collectors.toMap(Poster::getId, Poster::getName, (a, b) -> a));
+        return ResponseEntity.ok().body(new PosterListResponse(posters.size(), names));
     }
 
 }

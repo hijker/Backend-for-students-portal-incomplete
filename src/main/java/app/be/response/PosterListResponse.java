@@ -1,14 +1,15 @@
 package app.be.response;
 
 import java.util.List;
+import java.util.Map;
 
 public class PosterListResponse {
 
     final int count;
 
-    final List<String> names;
+    final Map<String, String> names;
 
-    public PosterListResponse(int count, List<String> names) {
+    public PosterListResponse(int count, Map<String, String> names) {
         this.count = count;
         this.names = names;
     }
