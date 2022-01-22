@@ -1,9 +1,7 @@
 package app.be.service;
 
 import app.be.dao.service.PosterDaoService;
-import app.be.dao.service.UserDaoService;
 import app.be.model.Poster;
-import app.be.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

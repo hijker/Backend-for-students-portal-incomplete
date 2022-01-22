@@ -1,9 +1,7 @@
 package app.be.resource;
 
 import app.be.model.Notice;
-import app.be.model.Poster;
 import app.be.response.NoticeListResponse;
-import app.be.response.PosterListResponse;
 import app.be.service.NoticeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +32,13 @@ public class NoticeUploadResource {
 
     @PostMapping(value = "/upload",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> upload(final HttpServletRequest request,
+    public ResponseEntity<Notice> upload(final HttpServletRequest request,
                                          @RequestParam("file") MultipartFile file) throws IOException {
         String id = String.valueOf(Arrays.hashCode(file.getBytes()));
         String altName = file.getOriginalFilename();
-        noticeService.insertNotice(id, altName, file.getBytes());
+        Notice notice = noticeService.insertNotice(id, altName, file.getBytes());
 
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(notice);
     }
 
     @GetMapping(value = "/download",

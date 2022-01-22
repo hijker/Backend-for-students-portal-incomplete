@@ -32,13 +32,13 @@ public class PosterUploadResource {
 
     @PostMapping(value = "/upload",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> upload(final HttpServletRequest request,
+    public ResponseEntity<Poster> upload(final HttpServletRequest request,
                                          @RequestParam("file") MultipartFile file) throws IOException {
         String id = String.valueOf(Arrays.hashCode(file.getBytes()));
         String altName = file.getOriginalFilename();
-        posterService.insertPoster(id, altName, file.getBytes());
+        Poster poster = posterService.insertPoster(id, altName, file.getBytes());
 
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(poster);
     }
 
     @GetMapping(value = "/download",

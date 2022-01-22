@@ -3,8 +3,8 @@
     <title>Game On!</title>
     <link href="assets/img/archery.png" rel="icon">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
@@ -13,11 +13,11 @@
     <link href="assets/css/stats.css" rel="stylesheet">
 </head>
 <body class="bg-image">
-    <div>
+<div>
     <div class="content-margin header banner">
         <h1 id="displayName"></h1>
         <div id="timer-container">
-            <div id="days-container" class="unit-container">
+            <div class="unit-container" id="days-container">
                 <div id="days">DD</div>
                 <div class="unit">Days</div>
             </div>
@@ -34,9 +34,10 @@
                 <div class="unit">Seconds</div>
             </div>
         </div>
-        <span id="launchZoom" style="display:none"><button id="zoomButton" onclick=launchZoom()>Launch Zoom</button></span>
+        <span id="launchZoom" style="display:none"><button id="zoomButton"
+                                                           onclick=launchZoom()>Launch Zoom</button></span>
         <div class="controls">
-            <button onclick="endGame()" id="end-game"> End
+            <button id="end-game" onclick="endGame()"> End
                 Game
             </button>
             <button class="btn" id="playPause" onclick="audioToggle()">
@@ -44,11 +45,11 @@
                 <img id="mute" src="assets/img/mute.png" style="display:none">
             </button>
             <div class="sign-out">
-                <form th:action="@{/logout}" method="post">
+                <form method="post" th:action="@{/logout}">
 
-                    <button type="submit" style="border:none;background: transparent">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#663300" width="30px"
-                             height="30px">
+                    <button style="border:none;background: transparent" type="submit">
+                        <svg fill="#663300" height="30px" viewBox="0 0 20 20" width="30px"
+                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M4.2 10.7c-.1 0-.3 0-.4-.1L.6 7.4c-.2-.2-.2-.5 0-.7l3.2-3.2c.2-.2.5-.2.7 0s.2.5 0 .7L1.7 7l2.9 2.9c.2.2.2.5 0 .7-.1.1-.3.1-.4.1zM13 13.5H6.4c-.3 0-.5-.2-.5-.5s.2-.5.5-.5h6.1v-11H6.4c-.2 0-.5-.2-.5-.5s.2-.5.5-.5H13c.3 0 .5.2.5.5v12c0 .3-.2.5-.5.5z"></path>
                             <path d="M10 7.5H1C.7 7.5.5 7.3.5 7s.2-.5.5-.5h9c.3 0 .5.2.5.5s-.2.5-.5.5z"></path>
                         </svg>
@@ -61,8 +62,8 @@
         <div class="leader-board content-margin card">
             <span class="lead-head"> Leader Board</span>
             <span class="refresh">
-               <svg xmlns="http://www.w3.org/2000/svg" onclick="fetchProgress()" fill="#663300" viewBox="0 0 50 50"
-                    width="25px" height="25px"><path
+               <svg fill="#663300" height="25px" onclick="fetchProgress()" viewBox="0 0 50 50"
+                    width="25px" xmlns="http://www.w3.org/2000/svg"><path
                        d="M 20 4 C 14.507813 4 10 8.507813 10 14 L 10 31.75 L 7.125 28.875 L 4.3125 31.71875 L 12 39.40625 L 19.6875 31.71875 L 16.875 28.90625 L 14 31.75 L 14 14 C 14 10.691406 16.691406 8 20 8 L 31 8 L 31 4 Z M 38 10.59375 L 30.28125 18.3125 L 33.125 21.125 L 36 18.25 L 36 36 C 36 39.308594 33.308594 42 30 42 L 19 42 L 19 46 L 30 46 C 35.492188 46 40 41.492188 40 36 L 40 18.25 L 42.875 21.125 L 45.6875 18.28125 Z"/></svg>
            </span>
             <table class="table" width="500">
@@ -73,30 +74,30 @@
             </table>
         </div>
         <div class="content-margin card question-container" id="mid-box">
-            <iframe src="https://embed.lottiefiles.com/animation/33620" id="wrong-answer"
+            <iframe id="wrong-answer" src="https://embed.lottiefiles.com/animation/33620"
                     style="margin: 10% 33%; height: 300px; border: none;display: none;"></iframe>
-            <iframe src="https://embed.lottiefiles.com/animation/8808" id="right-answer"
+            <iframe id="right-answer" src="https://embed.lottiefiles.com/animation/8808"
                     style="margin: 10% 33%; height: 300px; border: none;display: none;"></iframe>
             <div id="clue">
-<!--                <h1 id="questionId" style="margin-left: 40px;"></h1>-->
+                <!--                <h1 id="questionId" style="margin-left: 40px;"></h1>-->
                 <div class="question">
                     <div id="questionLink"></div>
                     <div id="wrongAnswer"></div>
                     <div id="answer-container">
-                        <input type="text" id="answer"/>
+                        <input id="answer" type="text"/>
                         <button id="submit-answer" onclick="submitAnswer()"> Submit</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card chat-container content-margin" >
+        <div class="card chat-container content-margin">
             <div>
                 <span class="lead-head"> Comments</span>
                 <div class="comment-input">
-                    <input type="text" id="comment"/>
+                    <input id="comment" type="text"/>
                     <button id="submit-comment" onclick="comment()">Comment</button>
                 </div>
-           </div>
+            </div>
             <div>
                 <table class="table" style="padding-top: 30px">
                     <thead>
@@ -112,7 +113,7 @@
 </div>
 </body>
 <script src="assets/js/stats.js"></script>
-<audio loop id="myAudio">
+<audio id="myAudio" loop>
     <source src="assets/audio/bgm.mp3">
 </audio>
 

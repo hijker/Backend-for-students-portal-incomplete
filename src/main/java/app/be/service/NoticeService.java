@@ -26,7 +26,7 @@ public class NoticeService {
         return noticeDaoService.createNotice(notice);
     }
 
-    public Notice findPoster(String id) {
+    public Notice findNotice(String id) {
         return noticeDaoService.findNotice(id);
     }
 

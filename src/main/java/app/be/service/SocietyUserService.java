@@ -2,7 +2,6 @@ package app.be.service;
 
 import app.be.dao.service.SocietyUserDaoService;
 import app.be.model.SocietyUser;
-import app.be.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

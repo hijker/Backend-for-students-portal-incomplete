@@ -27,8 +27,16 @@ public class Notice {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public byte[] getData() {
@@ -37,13 +45,5 @@ public class Notice {
 
     public void setData(byte[] data) {
         this.data = data;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

@@ -33,14 +33,14 @@
 <body>
 
 <!-- ======= Header ======= -->
-<header id="header" class="fixed-top">
+<header class="fixed-top" id="header">
     <div class="container d-flex align-items-center justify-content-between">
 
         <h1 class="logo"><a href="index.html">Scavenger Hunt</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-        <nav id="navbar" class="navbar">
+        <nav class="navbar" id="navbar">
             <ul>
                 <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                 <li><a class="nav-link scrollto" href="#about">Rules</a></li>
@@ -66,21 +66,24 @@
 </header><!-- End Header -->
 
 <!-- ======= Hero Section ======= -->
-<div id="hero" class="hero route bg-image" style="background-image: url(assets/img/hero-bg.jpg)">
+<div class="hero route bg-image" id="hero" style="background-image: url(assets/img/hero-bg.jpg)">
     <!--    <div class="overlay-itro"></div>-->
     <div class="hero-content display-table">
         <div class="table-cell">
             <div class="container">
                 <!--<p class="display-6 color-d">Hello, world!</p>-->
-<!--                <h1 class="hero-title mb-4">Scavenger Hunt</h1>-->
+                <!--                <h1 class="hero-title mb-4">Scavenger Hunt</h1>-->
                 <p class="hero-subtitle"><span class="typed"
                                                data-typed-items="Scan QR code, Find the solution, Think Smarter, Win Big!!!"></span>
                 </p>
-                <p class="pt-3"><button class="btn btn-primary btn js-scroll px-4" onclick=launchGame() role="button" id ="shoot-button">SHOOT</button>
+                <p class="pt-3">
+                    <button class="btn btn-primary btn js-scroll px-4" id="shoot-button" onclick=launchGame()
+                            role="button">SHOOT
+                    </button>
                 </p>
-<!--                <h1 id="timeLeft" style="align-content: center; color: white"> DD:HH:MM:SS </h1>-->
+                <!--                <h1 id="timeLeft" style="align-content: center; color: white"> DD:HH:MM:SS </h1>-->
                 <div id="timer-container">
-                    <div id="days-container" class="unit-container">
+                    <div class="unit-container" id="days-container">
                         <div id="days">DD</div>
                         <div class="unit">Days</div>
                     </div>
@@ -258,8 +261,8 @@
                                 <span class="ico-circle"><i class="bi bi-card-checklist"></i></span>
                             </div>
                             <div class="counter-num">
-                                <p data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="500"
-                                   class="counter purecounter"></p>
+                                <p class="counter purecounter" data-purecounter-duration="500" data-purecounter-end="10"
+                                   data-purecounter-start="0"></p>
                                 <span class="counter-text">Total Questions</span>
                             </div>
                         </div>
@@ -270,8 +273,8 @@
                                 <span class="ico-circle"><i class="bi bi-trophy"></i></span>
                             </div>
                             <div class="counter-num">
-                                <p data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="500"
-                                   class="counter purecounter"></p>
+                                <p class="counter purecounter" data-purecounter-duration="500" data-purecounter-end="3"
+                                   data-purecounter-start="0"></p>
                                 <span class="counter-text">Winners</span>
                             </div>
                         </div>
@@ -282,8 +285,8 @@
                                 <span class="ico-circle"><i class="bi bi-cash-coin"></i></span>
                             </div>
                             <div class="counter-num">
-                                <p data-purecounter-start="0" data-purecounter-end="2000" data-purecounter-duration="10"
-                                   class="counter purecounter"></p>
+                                <p class="counter purecounter" data-purecounter-duration="10" data-purecounter-end="2000"
+                                   data-purecounter-start="0"></p>
                                 <span class="counter-text">Cash Prize</span>
                             </div>
                         </div>
@@ -301,7 +304,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="contact-mf">
-                            <div id="contact" class="box-shadow-full">
+                            <div class="box-shadow-full" id="contact">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="title-box-2 pt-4 pt-md-0">
@@ -333,7 +336,7 @@
 </main><!-- End #main -->
 
 <div id="preloader"></div>
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+<a class="back-to-top d-flex align-items-center justify-content-center" href="#"><i
         class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
@@ -347,7 +350,7 @@
 <script src="assets/js/main.js"></script>
 
 </body>
-<audio loop id="myAudio">
+<audio id="myAudio" loop>
     <source src="assets/audio/bgm.mp3">
 </audio>
 </html>

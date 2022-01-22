@@ -25,16 +25,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AuthResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SocietyAuthResource.class);
-
+    static Map<String, Integer> otps = new ConcurrentHashMap<>();
+    static Map<String, User> activeUsers = new ConcurrentHashMap<>();
     @Autowired
     private UserService userService;
-
     @Autowired
     private JavaMailSender emailSender;
-
-    static Map<String, Integer> otps = new ConcurrentHashMap<>();
-
-    static Map<String, User> activeUsers = new ConcurrentHashMap<>();
 
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> addUser(final HttpServletRequest request,

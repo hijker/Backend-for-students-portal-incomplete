@@ -27,20 +27,20 @@ public class SocietyUser {
         return email;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public void setEmail(final String email) {
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {

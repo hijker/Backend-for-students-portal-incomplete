@@ -2,7 +2,6 @@ package app.be.dao.service;
 
 import app.be.dao.repository.NoticeRepository;
 import app.be.model.Notice;
-import app.be.model.Poster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
