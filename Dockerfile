@@ -5,7 +5,7 @@ RUN gradle build --no-daemon
 
 FROM openjdk:8-jdk-alpine
 
-LABEL maintainer="god"
+LABEL maintainer="jack"
 
 EXPOSE 8080
 
